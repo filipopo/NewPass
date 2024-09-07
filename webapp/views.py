@@ -3,8 +3,8 @@ import cv2
 import base64
 import numpy as np
 import tensorflow as tf
+from functools import wraps
 from utils import L1Dist, cut_frame, preprocess_numpy, verify
-from .utils import getHeadline
 from .models import Secret
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -20,25 +20,29 @@ def index(request):
 
     return render(request, 'index.html')
 
+def checkVerification(func):
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        if not request.session.get('verified', False):
+            return redirect('/')  # Redirect to main page if not verified
+        return func(request, *args, **kwargs)
+    return wrapper
+
+@checkVerification
 def secrets(request):
-    if not request.session.get('verified', False):
-        return redirect('/')  # Redirect to main page if not verified
+    return render(request, 'secrets.html', {'mysecrets': Secret.objects.all()})
 
-    mysecrets = Secret.objects.all().values()
-    return render(request, 'secrets.html', {'mysecrets': mysecrets})
-
+@checkVerification
 def secret(request, id):
     mysecret = Secret.objects.get(id=id)
-    headline = getHeadline(mysecret.username, mysecret.url, mysecret.id)
     fields = []
 
     # Loop over all fields but don't include the id which is the first one
     for field in mysecret._meta.fields[1:]:
         val = getattr(mysecret, field.name) 
         if val: fields.append(f'{field.name}: {val}')
-    
+
     fields = {
-        'headline': headline,
         'mysecret': mysecret,
         'fields': fields
     }

@@ -1,20 +1,46 @@
 # Newpass
 
-Tensorflow 2.16.1
+Welcome to newpass, my student research project about facial recognition in software for secrets management
 
-pip install -r requirements.txt
+## Installation instructions
 
-python manage.py createsuperuser
+to get started install the dependencies
 
-python manage.py runserver
+`pip install -r requirements.txt`
 
-python manage.py makemigrations webapp
+Then create the admin user
 
-python manage.py migrate
+`python manage.py createsuperuser`
 
+Now you're ready to start the server
+
+`python manage.py runserver`
+
+After starting it visit the url e.g
+
+http://127.0.0.1:8000/
+
+## When making changes
+
+When changing the database model run this command to create the migration file
+
+`python manage.py makemigrations webapp`
+
+Then this comand to apply them
+
+`python manage.py migrate`
+
+## Troubleshooting
+
+If you have problems with libraries not updating after changes being made in Jupyter, try this:
+
+```
 import importlib
 import utils
 importlib.reload(utils)
+```
+
+This project was tested with tensorflow 2.16.1, if you encounter any errors with newer versions do try to patch them up
 
 ## Potential improvements
 
@@ -41,6 +67,8 @@ Improve checkpoints to use tf.keras.callbacks.ModelCheckpoint. Set filepath, sav
 ## Thanks to
 
 https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf
+
+https://vis-www.cs.umass.edu/lfw
 
 https://github.com/nicknochnack/FaceRecognition
 
