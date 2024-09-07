@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Welcome to Newpass</h1>
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <br/>
+
+    <button id="capture">Capture Image</button>
+    <p id="result"></p>
+
+    <script src="{% static 'camera.js' %}"></script>
+{% endblock %}
