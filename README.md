@@ -1,6 +1,10 @@
 # Newpass
 
-Welcome to newpass, my student research project about facial recognition in software for secrets management
+Welcome to Newpass, my student research project about facial recognition in software for secrets management
+
+The process of training the model can be seen in the Training.ipynb Jupyter notebook while you can use Verification.ipynb to verify the model using image files or perform a real-time test using opencv and your web camera
+
+The student research paper can be found here: 
 
 ## Installation instructions
 

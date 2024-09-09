@@ -58,7 +58,7 @@ def process_image(request):
         image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
         # Process the image as needed
-        image = preprocess_numpy(image)
+        image = preprocess_numpy(cut_frame(image))
         results, verified = verify(image, siamese_model, APP_PATH, 0.7, 0.6)
 
         if verified:

@@ -2,12 +2,13 @@
 {% load static %}
 {% block content %}
     <h1>Welcome to Newpass</h1>
+    <p>Center yourself in the camera and click on "Capture image"</p>
 
     <video id="video" width="640" height="480" autoplay></video>
     <canvas id="canvas" style="display:none;"></canvas>
     <br/>
 
-    <button id="capture">Capture Image</button>
+    <button id="capture">Capture image</button>
     <p id="result"></p>
 
     <script src="{% static 'camera.js' %}"></script>
