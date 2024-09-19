@@ -3,6 +3,7 @@ import cv2
 import base64
 import numpy as np
 import tensorflow as tf
+#from re import match
 from functools import wraps
 from utils import L1Dist, cut_frame, preprocess_numpy, verify
 from .models import Secret
@@ -36,6 +37,9 @@ def secrets(request):
 def secret(request, id):
     mysecret = Secret.objects.get(id=id)
     fields = []
+
+    #if not match(r'https?://', mysecret.url):
+    #    mysecret.url = f'https://{mysecret.url}'
 
     # Loop over all fields but don't include the id which is the first one
     for field in mysecret._meta.fields[1:]:
