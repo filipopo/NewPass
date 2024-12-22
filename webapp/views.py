@@ -5,10 +5,11 @@ import numpy as np
 import tensorflow as tf
 #from re import match
 from functools import wraps
-from utils import L1Dist, cut_frame, preprocess_numpy, verify
+from utils import L1Dist, cut_frame, preprocess_np, verify
 from .models import Secret
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
 APP_PATH = os.path.join('data', 'app')
@@ -54,20 +55,19 @@ def secret(request, id):
     return render(request, 'secret.html', fields)
 
 @csrf_exempt
+@require_POST
 def process_image(request):
-    if request.method == 'POST':
-        image = request.body.decode('utf-8')
-        image = image.split(',', maxsplit=1)[1] # Remove base64 header
-        image = np.frombuffer(base64.b64decode(image), np.uint8)
-        image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+    img = request.body.decode('utf-8')
+    img = img.split(',', maxsplit=1)[1] # Remove base64 header
+    img = np.frombuffer(base64.b64decode(img), np.uint8)
+    img = cv2.imdecode(img, cv2.IMREAD_COLOR)
 
-        # Process the image as needed
-        image = preprocess_numpy(cut_frame(image))
-        results, verified = verify(image, siamese_model, APP_PATH, 0.7, 0.6)
+    # Process the image as needed
+    img = preprocess_np(cut_frame(img))
+    results, verified = verify(img, siamese_model, APP_PATH, 0.7, 0.6)
 
-        if verified:
-            request.session['verified'] = True
+    if verified:
+        request.session['verified'] = True
 
-        # Return the result
-        return JsonResponse({'verified': verified})
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    # Return the result
+    return JsonResponse({'verified': verified})

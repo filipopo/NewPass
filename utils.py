@@ -16,8 +16,8 @@ class L1Dist(Layer):
 
 # Cut down frame to 250x250px from whatever it was e.g 640x480
 def cut_frame(frame):
-    height_change, width = frame.shape[:2]
-    height_change /= 250
+    height, width = frame.shape[:2]
+    height /= 250
     width = int(width / height_change)
 
     frame = cv2.resize(frame, (width, 250))
@@ -48,7 +48,7 @@ def preprocess_file(img):
 
     return preprocess(img)
 
-def preprocess_numpy(img):
+def preprocess_np(img):
     img = tf.convert_to_tensor(img, dtype=tf.float32)
     return preprocess(img)
 
