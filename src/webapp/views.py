@@ -3,7 +3,7 @@ import cv2
 import base64
 import numpy as np
 import tensorflow as tf
-#from re import match
+# from re import match
 from functools import wraps
 from utils import L1Dist, cut_frame, preprocess_np, verify
 from .models import Secret
@@ -16,11 +16,13 @@ APP_PATH = os.path.join('data', 'app')
 siamese_model = os.path.join('data', 'siamesemodelv2.keras')
 siamese_model = tf.keras.models.load_model(siamese_model, custom_objects={'L1Dist': L1Dist})
 
+
 def index(request):
     if request.session.get('verified', False):
         return redirect('/secrets')  # Redirect to secrets page if already verified
 
     return render(request, 'index.html')
+
 
 def checkVerification(func):
     @wraps(func)
@@ -30,22 +32,25 @@ def checkVerification(func):
         return func(request, *args, **kwargs)
     return wrapper
 
+
 @checkVerification
 def secrets(request):
     return render(request, 'secrets.html', {'mysecrets': Secret.objects.all()})
+
 
 @checkVerification
 def secret(request, id):
     mysecret = Secret.objects.get(id=id)
     fields = []
 
-    #if not match(r'https?://', mysecret.url):
+    # if not match(r'https?://', mysecret.url):
     #    mysecret.url = f'https://{mysecret.url}'
 
     # Loop over all fields but don't include the id which is the first one
     for field in mysecret._meta.fields[1:]:
-        val = getattr(mysecret, field.name) 
-        if val: fields.append(f'{field.name}: {val}')
+        val = getattr(mysecret, field.name)
+        if val:
+            fields.append(f'{field.name}: {val}')
 
     fields = {
         'mysecret': mysecret,
@@ -54,11 +59,14 @@ def secret(request, id):
 
     return render(request, 'secret.html', fields)
 
+
 @csrf_exempt
 @require_POST
 def process_image(request):
     img = request.body.decode('utf-8')
-    img = img.split(',', maxsplit=1)[1] # Remove base64 header
+
+    # Remove base64 header
+    img = img.split(',', maxsplit=1)[1]
     img = np.frombuffer(base64.b64decode(img), np.uint8)
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
 

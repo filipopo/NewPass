@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 
+
 def getHeadline(username, url, id):
     if url:
         if username:
@@ -10,6 +11,7 @@ def getHeadline(username, url, id):
         return username
 
     return f'Secret {id}'
+
 
 # Create your models here.
 class Secret(models.Model):
