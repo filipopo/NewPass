@@ -1,0 +1,27 @@
+name: CI - app
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      - name: Install app dependencies
+        run: pip install -r src/requirements.txt
+
+      - name: Run tests
+        run: python manage.py test
+        working-directory: src
