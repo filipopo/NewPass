@@ -4,7 +4,7 @@ Welcome to Newpass, my student research project about facial recognition in soft
 
 The process of training the model can be seen in the Training.ipynb Jupyter notebook while you can use Verification.ipynb to verify the model using image files or perform a real-time test using opencv and your web camera
 
-The student research paper can be found here: 
+The student research paper can be found here: https://akademijanis.edu.rs/wp-content/uploads/2025/04/Zbornik_radova_ATVSS_2024.pdf#page=102
 
 ## Installation instructions
 
