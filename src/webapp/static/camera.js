@@ -125,8 +125,8 @@ captureButton.addEventListener('click', async () => {
                 let sum = 0;
                 for (let i = 0; i < a.length; i += 4) {
                     // grayscale difference
-                    const ga = 0.299 *a[i] + 0.587 * a[i+1] + 0.114 * a[i+2];
-                    const gb = 0.299 * b[i] + 0.587 * b[i+1] + 0.114 * b[i+2];
+                    const ga = 0.299 * a[i] + 0.587 * a[i + 1] + 0.114 * a[i + 2];
+                    const gb = 0.299 * b[i] + 0.587 * b[i + 1] + 0.114 * b[i + 2];
                     sum += Math.abs(ga - gb);
                 }
 

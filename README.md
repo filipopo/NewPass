@@ -6,11 +6,17 @@ The process of training the model can be seen in the Training.ipynb Jupyter note
 
 The student research paper can be found here: https://akademijanis.edu.rs/wp-content/uploads/2025/04/Zbornik_radova_ATVSS_2024.pdf#page=102
 
+sudo apt install git-lfs
+
+git lfs pull
+
 ## Installation instructions
 
-to get started install the dependencies
+These instructions should be ran in the `src` directory, to get started install the dependencies
 
 `pip install -r requirements.txt`
+
+`python manage.py migrate`
 
 Then create the admin user
 

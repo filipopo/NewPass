@@ -2,3 +2,4 @@ tensorflow
 opencv-python
 matplotlib
 django
+django-otp
